@@ -1,4 +1,4 @@
-# Stock Price Prediction
+# Stock Price Prediction_v2
 
 This repository contains a script to download historical stock data for multiple ticker symbols and save the data to CSV files. The script is designed to be run in Google Colab.
 
@@ -25,45 +25,70 @@ drive.mount('/content/drive')
 # Install yfinance
 !pip install yfinance
 
-def historical_data(tickers, start_date, end_date, output_dir='historical_data'):
-    """
-    Downloads historical stock data for multiple ticker symbols and saves to CSV files.
+# FTSE100 Stock Price Prediction
 
-    Parameters:
-    - tickers (list): Ticker symbols to download.
-    - start_date (str): Start date for data in 'YYYY-MM-DD' format.
-    - end_date (str): End date for data in 'YYYY-MM-DD' format.
-    - output_dir (str): Directory to save CSV files.
+This project downloads, processes, and merges historical stock data for selected FTSE100 companies, preparing it for future stock price prediction analysis.
 
-    Returns:
-    - None. Saves CSV files in the specified directory.
-    """
-    os.makedirs(output_dir, exist_ok=True)
+## Features
 
-    for ticker in tickers:
-        print(f'Downloading data for {ticker}...')
-        data = yf.download(ticker, start=start_date, end=end_date)
-        if not data.empty:
-            file_path = os.path.join(output_dir, f'{ticker}_historical_data.csv')
-            data.to_csv(file_path)
-            print(f'Data for {ticker} saved to {file_path}')
-        else:
-            print(f'No data found for {ticker}')
+- Downloads historical stock data for multiple FTSE100 companies using yfinance
+- Processes and cleans the data, keeping only relevant columns
+- Merges data from different stocks into a single DataFrame
+- Handles errors and missing data gracefully
+- Compatible with Google Colab for easy cloud-based execution
 
-# List tickers to download data
-tickers = ['BATS.L', 'LAND.L', 'SVT.L', 'GLEN.L', 'RR.L', 'RTO.L', 'SGE.L', 'CCH.L', 'PHNX.L', 'SN.L']
+## Dependencies
 
-# Set start and end dates for historical data
-start_date = '2013-01-01'
+- yfinance
+- pandas
+- os
+- datetime
+
+## Usage
+
+1. Mount Google Drive (if using Google Colab):
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+2. Install required libraries:
+
+!pip install yfinance
+
+3. Import necessary libraries:
+
+import yfinance as yf
+import pandas as pd
+import os
+from datetime import datetime, timedelta
+
+4. Use the `download_and_process_data` function to download, process, and merge stock data:
+
+def download_and_process_data(tickers, start_date, end_date, output_dir):
+    # Function implementation...
+
+# Example usage:
+tickers = ['BATS.L', 'CCH.L', 'LAND.L', 'SVT.L', 'GLEN.L', 'RR.L', 'RTO.L', 'SGE.L', 'LGEN.L', 'SN.L']
+start_date = '2014-01-01'
 end_date = '2023-12-31'
+output_dir = 'historical_data'
 
-# Set directory to save CSV files
-output_dir = 'FTSE100_historical_data'
+merged_df = download_and_process_data(tickers, start_date, end_date, output_dir)
 
-# Print current working directory
-print("Current Working Directory:", os.getcwd())
+## Data Processing
 
-# Call the function to download data
-historical_data(tickers, start_date, end_date, output_dir)
+The `download_and_process_data` function:
+- Creates a directory to store the CSV files
+- Downloads data for each ticker symbol
+- Processes each dataset, keeping only the 'Date' and 'Adj Close' columns
+- Renames the 'Adj Close' column to the stock ticker name
+- Merges all processed datasets into a single DataFrame
 
+## Output
+
+The function returns a merged DataFrame containing:
+- Date
+- Adjusted closing prices for all specified stocks
+
+Individual CSV files for each stock are also saved in the specified output directory.
 
