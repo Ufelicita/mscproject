@@ -1,94 +1,118 @@
-# Stock Price Prediction_v2
+# A Data Science Approach to Technical Analysis: Revolutionising Stock Price Prediction with Machine Learning
 
-This repository contains a script to download historical stock data for multiple ticker symbols and save the data to CSV files. The script is designed to be run in Google Colab.
+## Project Overview
 
-## Libraries Used
+In this ongoing project, I am exploring how data science and machine learning techniques can enhance traditional technical analysis for stock price prediction. While  focusing on selected FTSE100 companies, I aim  to develop a more accurate and robust prediction model than conventional methods.
 
-- `yfinance`: For downloading historical stock data.
-- `pandas`: For data manipulation.
-- `os`: For file and directory operations.
+## Project Versions
 
-## Setup and Usage
+### Version 1: Initial Data Collection
 
-### Script to Download Historical Stock Data
+In this version, the following was done :
+- Set up the basic structure for data collection
+- Implemented a `historical_data` function to download stock data
+- Saved data to CSV files in a specified directory
+- Implemented error handling and informative output
 
-The following script downloads historical stock data for specified ticker symbols and saves the data to CSV files in a specified directory. This script includes all the necessary steps, including mounting Google Drive and installing required libraries.
+### Version 2: Data Processing and Merging
 
-```python
-from google.colab import drive
-import os
-import yfinance as yf
+Building on the first version, the following modifications were made and further steps were added as shown below  :
+- Refined the data collection process
+- Implemented a `download_and_process_data` function that:
+  - Downloads data for multiple stocks
+  - Processes each dataset (keeping only 'Date' and 'Adjusted Close')
+  - Merges all processed datasets into a single DataFrame
+- Updated the list of FTSE100 companies being analyzed
+- Set the date range from 2014-01-01 to 2023-12-31
 
-# Mount Google Drive
-drive.mount('/content/drive')
+### Version 3: Exploratory Data Analysis (EDA)
 
-# Install yfinance
-!pip install yfinance
+In this version, I added comprehensive EDA capabilities:
+- Implemented a `perform_eda` function to analyze the merged dataset
+- Added visualizations including:
+  - Stock prices over time
+  - Correlation heatmap
+  - Distribution of daily log returns
+  - Cumulative returns
+- Calculated key financial metrics such as:
+  - Average log returns
+  - Cumulative returns
+  - Sharpe ratios
+  - Skewness and kurtosis of returns
+ 
+## Current Data and Analysis
+I am currently analysing the following FTSE companies: 
 
-# FTSE100 Stock Price Prediction
+1. BATS.L (British American Tobacco)
+2. CCH.L (Coca-Cola HBC)
+3. LAND.L (Land Securities Group)
+4. SVT.L (Severn Trent)
+5. GLEN.L (Glencore)
+6. RR.L (Rolls-Royce Holdings)
+7. RTO.L (Rentokil Initial)
+8. SGE.L (Sage Group)
+9. LGEN.L (Legal & General Group)
+10. SN.L (Smith & Nephew)
 
-This project downloads, processes, and merges historical stock data for selected FTSE100 companies, preparing it for future stock price prediction analysis.
+## In-Depth Analysis of Exploratory Data Analysis (EDA) Results
 
-## Features
+###  Data Quality and Completeness
 
-- Downloads historical stock data for multiple FTSE100 companies using yfinance
-- Processes and cleans the data, keeping only relevant columns
-- Merges data from different stocks into a single DataFrame
-- Handles errors and missing data gracefully
-- Compatible with Google Colab for easy cloud-based execution
+The  dataset showed excellent quality:
+- No missing values across all stocks
+- No duplicate rows
 
-## Dependencies
+This means our data was complete and clean, providing a solid foundation for  analysis and future modelling.
 
-- yfinance
-- pandas
-- os
-- datetime
+###  Descriptive Statistics
 
-## Usage
+Looking at the summary statistics:
 
-1. Mount Google Drive (if using Google Colab):
+a) Price Ranges:
+   - BATS shows the highest average price (2327.03) with a range from 1509.61 to 3410.24
+   - GLEN has the lowest average price (259.22) ranging from 52.58 to 540.28
 
-from google.colab import drive
-drive.mount('/content/drive')
+This wide variation in price ranges suggests a  need to normalize the  data when building predictive models to ensure all stocks are treated equally regardless of their price scale.
 
-2. Install required libraries:
+b) Volatility (Standard Deviation):
+   - SVT shows the highest absolute volatility (std: 456.93)
+   - LGEN shows the lowest absolute volatility (std: 37.09)
 
-!pip install yfinance
+However, to get a true sense of the relative volatility, further EDA would be conducted to calculate the Coefficient of Variation (CV) for each stock.
 
-3. Import necessary libraries:
+### 3. Returns Analysis
 
-import yfinance as yf
-import pandas as pd
-import os
-from datetime import datetime, timedelta
+a) Average Log Returns:
+   - RTO leads with 0.0587% daily return
+   - RR is the only stock with a negative average return (-0.0108%)
 
-4. Use the `download_and_process_data` function to download, process, and merge stock data:
+This however suggests RTO has been the best performer in terms of consistent growth, while RR has struggled.
 
-def download_and_process_data(tickers, start_date, end_date, output_dir):
-    # Function implementation...
+b) Cumulative Returns:
+   - RTO shows an impressive 314.92% return over the period
+   - RR has the lowest cumulative return at 25.15%
 
-# Example usage:
-tickers = ['BATS.L', 'CCH.L', 'LAND.L', 'SVT.L', 'GLEN.L', 'RR.L', 'RTO.L', 'SGE.L', 'LGEN.L', 'SN.L']
-start_date = '2014-01-01'
-end_date = '2023-12-31'
-output_dir = 'historical_data'
+These figures represent the total return if  the stock was held  for the entire period. RTO investors would have more than quadrupled their money, while RR investors would have gained only a quarter.
 
-merged_df = download_and_process_data(tickers, start_date, end_date, output_dir)
+### 4. Risk-Adjusted Performance
 
-## Data Processing
+Sharpe Ratios:
+   - RTO leads with 0.580292
+   - RR has a negative Sharpe ratio (-0.057185)
 
-The `download_and_process_data` function:
-- Creates a directory to store the CSV files
-- Downloads data for each ticker symbol
-- Processes each dataset, keeping only the 'Date' and 'Adj Close' columns
-- Renames the 'Adj Close' column to the stock ticker name
-- Merges all processed datasets into a single DataFrame
+The Sharpe ratio measures return per unit of risk. RTO offers the best risk-adjusted returns, while RR's negative ratio suggests it is  not compensating investors for the risk they are taking.
 
-## Output
+### 5. Return Distribution Characteristics
 
-The function returns a merged DataFrame containing:
-- Date
-- Adjusted closing prices for all specified stocks
+a) Skewness:
+   - Most stocks show negative skewness, with RTO being the most negatively skewed (-1.084099)
+   - RR is the only stock with positive skewness (0.891731)
 
-Individual CSV files for each stock are also saved in the specified output directory.
+The negative skewness suggests more frequent small gains but occasional large losses. RR's positive skewness indicates the opposite: frequent small losses but occasional large gains.
+
+b) Kurtosis:
+   - RTO has the highest kurtosis (21.138360)
+   - SVT has the lowest kurtosis (3.973709)
+
+The high  kurtosis observed  indicates more frequent extreme events (both positive and negative). RTO's high kurtosis suggests it is  prone to more dramatic price movements, while SVT appears more stable.
 
