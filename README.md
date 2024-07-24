@@ -116,3 +116,49 @@ b) Kurtosis:
 
 The high  kurtosis observed  indicates more frequent extreme events (both positive and negative). RTO's high kurtosis suggests it is  prone to more dramatic price movements, while SVT appears more stable.
 
+## Version 4 : Stock Price Prediction
+### Description
+This notebook provides a comprehensive program designed to predict stock prices using historical data. By employing advanced machine learning techniques, the program analyzes historical stock price trends and generates forecasts for future stock prices based on past performance.
+
+### Expected Input Files
+The program requires historical stock price data in CSV format. Yahoo Finance can automatically download this data. The format of the expected input files should adhere to the standard structure provided by Yahoo Finance, which includes columns such as Date, Open, High, Low, Close, Adj Close, and Volume.
+
+### Automatic Download
+The notebook includes functionality to automatically download historical stock data. The tickers and date ranges for the data can be specified directly in the code. The function download_and_process_data(tickers, start_date, end_date, output_dir) is responsible for handling the download and processing of the data:
+
+### 
+#### Tickers: List of stock symbols to download data for.
+#### Start Date: The start date for the data retrieval period.
+#### End Date: The end date for the data retrieval period.
+#### Output Directory: Directory where the downloaded data will be saved
+### Input During Program Run
+During the execution of the program, users may need to provide specific inputs, such as:
+
+### Stock Symbol: 
+The symbol of the stock for which the prediction is to be made.
+### Date Range: 
+The date range for the historical data to be considered in the prediction model.
+These inputs are typically entered within the code cells of the notebook, where users can modify the parameters as needed.
+
+### Output of the Program
+The program produces the following outputs:
+
+### Predicted Stock Prices: 
+These predictions are saved in a CSV file. The CSV file will contain the date and the corresponding predicted stock price.
+### Graphical Plots:
+Visual representations of the historical data and the predicted prices. These plots are saved as image files (e.g., PNG) and provide a visual comparison between the historical and predicted stock prices.
+
+### How to Run the Program
+### Install Dependencies: 
+Ensure all required libraries are installed. You can install the necessary libraries. 
+
+### Configure Parameters:
+Modify the tickers and date ranges in the code as per your requirements.
+
+### Execute Notebook Cells:
+Run the cells in the notebook sequentially to download the data, train the models, and generate predictions.
+
+### Review Outputs:
+Examine the output CSV files and plots to analyze the predicted stock prices.
+
+This README aims to provide the necessary information for users to effectively understand and execute the stock price prediction program. For any specific queries or additional details, users are encouraged to refer to the notebook's code and comments.
